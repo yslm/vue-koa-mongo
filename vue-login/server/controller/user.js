@@ -7,6 +7,8 @@ const sha1 = require('sha1');
 //createToken
 const createToken = require('../token/createToken.js');
 
+const checkToken =require('../token/checkToken');
+
 //数据库的操作
 //根据用户名查找用户
 const findUser = (username) => {
@@ -46,8 +48,8 @@ const delUser = function(id) {
 //登录
 const Login = async(ctx) => {
   //拿到账号和密码
-  let username = ctx.request.body.name;
-  let password = sha1(ctx.request.body.pass);
+  let username = ctx.request.body.username;
+  let password = sha1(ctx.request.body.pwd);
 
   let doc = await findUser(username);
 
@@ -125,6 +127,12 @@ const Reg = async(ctx) => {
 //获得所有用户信息
 const GetAllUsers = async(ctx) => {
   //查询所有用户信息
+
+  console.log(5555);
+  // let res=await checkToken();
+
+  // console.log(res,'校验token的值合法或者过期没有');
+
   let doc = await findAllUsers();
   ctx.status = 200;
   ctx.body = {

@@ -16,7 +16,7 @@ export default new Vuex.Store({
 
     LOGIN(state,data){
       state.token=data;//这个data就是外面传递进来的token载荷
-      window.sessionStorage.setItem(data);
+      window.sessionStorage.setItem('token',data);
     },
 
     //登出

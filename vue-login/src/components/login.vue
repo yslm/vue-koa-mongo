@@ -31,6 +31,26 @@
 //        console.log(axios.userLogin);
           axios.userLogin(userInfo).then((res)=>{
             console.log(res);
+            //成功，需要将token和username存起来，并且跳转到成功的页面
+            let data=res.data;
+            if(data.success){
+              //登录成功
+              let token=data.token;
+              let time=data.create_time;
+              let username=data.username;
+              //存到store中
+              this.$store.dispatch('userLogin',token);
+              this.$store.dispatch('UserName',username);
+              //跳转
+
+              this.$router.replace('HelloWorld');
+
+
+
+            }
+
+
+
           }).catch((err)=>{
             console.log(err);
           })

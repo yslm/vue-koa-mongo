@@ -1,5 +1,6 @@
 const Koa = require('koa');
 const app = new Koa();
+const cors=require('koa2-cors');
 
 //router
 const Router = require('koa-router');
@@ -10,6 +11,7 @@ const router = new Router();
 //bodyparser:该中间件用于post请求的数据
 const bodyParser = require('koa-bodyparser');
 app.use(bodyParser());
+app.use(cors());
 
 //引入数据库操作方法
 const UserController = require('./server/controller/user.js');
@@ -46,7 +48,7 @@ router.use('/api',delUserRouter.routes(),delUserRouter.allowedMethods());
 //加载路由中间件
 app.use(router.routes()).use(router.allowedMethods());
 
-app.listen(8889, () => {
-    console.log('The server is running at http://localhost:' + 8889);
+app.listen(8085,'192.168.50.73', () => {
+    console.log('The server is running at http://192.168.50.73:' + 8085);
 });
 

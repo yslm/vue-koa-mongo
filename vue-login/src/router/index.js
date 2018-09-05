@@ -109,6 +109,8 @@ router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
     console.log(to.meta,'初始进入路由');
     if (token) {
+      //还得判断token是否过期呀
+
       next();
     } else {
       console.log(to,to.fullPath);

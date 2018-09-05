@@ -6,6 +6,7 @@ import router from './router'
 var instance = axios.create({
   timeout: 5000, //请求超过5秒即超时返回错误
   headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+  baseURL: 'http://192.168.50.73:8085',
 });
 
 //request拦截器
@@ -25,10 +26,14 @@ instance.interceptors.response.use(
     return response;
   },
   error => { //默认除了2XX之外的都是错误的，就会走这里
+    console.log('拦截响应',error.response);
     if (error.response) {
+
+
       switch (error.response.status) {
         case 401:
-          store.dispatch('UserLogout'); //可能是token过期，清除它
+          console.log('到这儿了');
+          store.dispatch('userLogout'); //可能是token过期，清除它
           router.replace({ //跳转到登录页面
             path: 'login',
             query: { redirect: router.currentRoute.fullPath } // 将跳转的路由path作为参数，登录成功后跳转到该路由
@@ -46,10 +51,11 @@ export default {
   },
   //用户登录
   userLogin(data) {
-    return axios.post('/api/login', data);  
+    return axios.post('/api/login', data);
   },
   //获取用户
   getUser() {
+    console.log(111);
     return instance.get('/api/user');
   },
   //删除用户
